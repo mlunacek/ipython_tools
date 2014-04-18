@@ -65,6 +65,7 @@ class Cluster:
         self.args['debug'] = kwargs.get('debug', False)
         self.args['terminate'] = kwargs.get('terminate', True)
         self.args['profile'] = kwargs.get('profile', None)
+        self.cwd = os.getcwd()
 
         self.directory = os.getcwd()
         self.set_ppn(self.args['ppn'])
@@ -77,7 +78,7 @@ class Cluster:
             self.profile = self.args['profile']
         self.logger.debug(self.profile)
         self.logger.debug(self.args['profile'])
-        
+
         self.ipengine_path()
         self.create_profile()
         self.start_controller()
@@ -192,6 +193,7 @@ class Cluster:
                 cmd.append('--profile='+self.profile)
                 cmd.append('--log-to-file')
                 cmd.append('--log-level=20')
+                cmd.append('--work-dir={0}'.format(self.cwd))
                 # print ' '.join(cmd)
                 tmp = subprocess.Popen(cmd,
                                 stdout=subprocess.PIPE,
