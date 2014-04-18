@@ -1,0 +1,19 @@
+import argparse
+import sys
+import iptools as ip
+
+if __name__ == '__main__':
+    args = ip.get_args(sys.argv[1:])
+
+    if args.command == 'start':
+        opts = dict()
+        opts['ppn'] = args.ppn
+        opts['debug'] = args.debug
+        opts['terminate'] = False
+        opts['profile'] = args.profile
+
+        c = ip.Cluster(**opts)
+    elif args.command == 'stop':
+        ip.delete()
+    else:
+        print 'Not a valid command', args.command
